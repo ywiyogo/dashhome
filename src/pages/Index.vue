@@ -10,8 +10,8 @@
       Weather Dashboard
     </div>
     <div class="row full-width justify-center" style="height: 75%">
-      <div class="column q-mr-lg justify-center">
-        <div class="col justify-center">
+      <div class="column q-mr-lg q-mb-xl justify-center">
+        <div class="col justify-center" style="max-height: 70px">
           <q-input
             v-model="weatherData.cityName"
             label="Search city"
@@ -41,7 +41,6 @@
             {{ time }}
           </div>
         </div>
-        <br />
         <div class="col justify-center text-h2 text-grey-2 q-mx-auto">
           {{ weatherData.cityName }}
         </div>
@@ -59,25 +58,24 @@
         </template>
         <template v-else>
           <div
-            class="col justify-center q-mx-auto text-h6 text-weight-light text-white"
+            class="col justify-center q-my-auto q-mx-auto text-h3 text-weight-light text-white"
           >
-            {{ weatherData.main }}
+            <div class="row">
+              <div class="col q-my-auto">{{ weatherData.main }}</div>
+              <div class="col"><img
+              :src="`http://openweathermap.org/img/wn/${weatherData.icon}@2x.png`"
+            /></div>
+            </div>
           </div>
-          <br />
           <div
             class="col justify-center q-mx-auto text-h1 text-weight text-white"
           >
             {{ Math.round(weatherData.temp) }}° C
           </div>
-          <div class="col justify-center text-center">
-            <img
-              :src="`http://openweathermap.org/img/wn/${weatherData.icon}@2x.png`"
-            />
-          </div>
         </template>
       </div>
       <template v-if="weatherData.temp">
-        <div class="column justify-between" style="width: 60%">
+        <div class="column justify-between" style="width: 65%">
           <div class="col text-white text-center">
             <Highlights
               :p_humidity="weatherData.humidity"

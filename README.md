@@ -25,10 +25,11 @@ export PATH=$PWD/node_modules/.bin:$PATH
 ## API Key from OpenWeather
 
 * Signup at openweathermap.org and get an API key. 
-* Create a file called `.env` in this project root folder and copy your API key as
+* Create a file called `.env` in this project root folder, copy your API key and set the update rate in milliseconds.
 
 ```
 API_KEY_WEATHER=<api_key>
+UPDATE_IN_MS=7200000
 ```
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
