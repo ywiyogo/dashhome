@@ -135,7 +135,6 @@ export default {
               },
             ],
           ];
-          console.log(this.line.series[0].markArea.data);
         }
 
         this.line.series[1].data = rainfall;
