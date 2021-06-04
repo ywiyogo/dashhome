@@ -26,7 +26,7 @@ export default {
         left: "center",
         textStyle: {
           color: "#fff",
-          fontSize: 15,
+          fontSize: 20,
         },
       },
 
@@ -35,15 +35,34 @@ export default {
         name: "Hours",
         data: [],
         axisLabel: {
-          fontSize: 18,
+          fontSize: 22,
         },
       },
-      yAxis: {
-        name: "°C or mm",
-        axisLabel: {
-          fontSize: 18,
+      yAxis: [
+        {
+          name: "°C",
+          axisLabel: {
+            fontSize: 20,
+            color: "#5470c6"
+          },
+          splitLine:{
+            lineStyle: {
+              type:"dashed"
+            }
+          },
         },
-      },
+        {
+          name: "°mm",
+          splitLine:{
+            show: false
+          },
+          axisLabel: {
+            fontSize: 20,
+            color: "#fac858",
+            
+          },
+        },
+      ],
       series: [
         {
           name: "Temperature",
@@ -62,6 +81,10 @@ export default {
         {
           name: "Rainfall",
           type: "bar",
+          yAxisIndex: 1,
+          itemStyle: {
+            color: "#fac858",
+          },
           data: [],
         },
       ],
@@ -84,14 +107,13 @@ export default {
       let hour = now.getHours();
       let _this = this;
       if (this.p_hourly !== null) {
-        console.log("value has value");
         for (let i = 0; i < this.p_hourly.length; i++) {
           xdata.push(_this.addHour(hour, i));
           ydata.push(this.p_hourly[i].temp);
-          if (this.p_hourly[i].weather.main === "Rain") {
-            rainfall.push(this.p_hourly[i].rain);
+          if (this.p_hourly[i].weather[0].main === "Rain") {
+            rainfall.push(this.p_hourly[i].rain["1h"]);
           } else {
-            rainfall.push(0.1);
+            rainfall.push(0);
           }
         }
         this.line.xAxis.data = xdata;
@@ -102,12 +124,6 @@ export default {
         sunriseDate.setUTCSeconds(this.p_sun[0]);
         sunsetDate.setUTCSeconds(this.p_sun[1]);
 
-        console.log(
-          "sunrise: " +
-            sunriseDate.getHours() +
-            " sunset: " +
-            sunsetDate.getHours()
-        );
         let xAxisSunRise = sunriseDate.getHours();
         let xAxisSunSet = sunsetDate.getHours();
         let showSunArea = true;
@@ -136,11 +152,10 @@ export default {
             ],
           ];
         }
-
         this.line.series[1].data = rainfall;
         return true;
       } else {
-        console.log("value doesn't have value");
+        console.log("WARNING: no value for the hourly data");
         this.series = [0];
         return false;
       }

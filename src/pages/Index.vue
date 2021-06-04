@@ -61,10 +61,12 @@
             class="col justify-center q-my-auto q-mx-auto text-h3 text-weight-light text-white"
           >
             <div class="row">
-              <div class="col q-my-auto">{{ weatherData.main }}</div>
-              <div class="col"><img
-              :src="`http://openweathermap.org/img/wn/${weatherData.icon}@2x.png`"
-            /></div>
+              <div class="col q-my-auto q-mr-lg">{{ weatherData.main }}</div>
+              <div class="col">
+                <img
+                  :src="`http://openweathermap.org/img/wn/${weatherData.icon}@2x.png`"
+                />
+              </div>
             </div>
           </div>
           <div
@@ -175,13 +177,14 @@ export default {
           // `${this.apiUrl}?lat=${this.lat}&lon=${this.lon}&appid=${process.env.API_KEY_WEATHER}&units=metric`
           `${this.oneCallApiUrl}?lat=${this.lat}&lon=${this.lon}&exclude=${this.excludeData}&appid=${process.env.API_KEY_WEATHER}&units=metric`
         );
+        // console.log(response)
         this.fillWeatherData(response.data, true);
         response = await this.$axios(
           `${this.apiUrl}?lat=${this.lat}&lon=${this.lon}&appid=${process.env.API_KEY_WEATHER}&units=metric`
         );
         this.weatherData.cityName = response.data.name;
       } catch (e) {
-        console.error(e);
+        // console.error(e);
         let alertmsg =
           e +
           "\nIf you didn't have an API key, plese create it on OpenWeatherMap site and place it in the .env file.";
@@ -266,11 +269,12 @@ export default {
   computed: {
     backgrndClass() {
       if (this.weatherData) {
-        if (this.weatherData.icon.endsWith("n")) {
-          return "backgrnd-night";
-        } else {
-          return "backgrnd-day";
-        }
+        return "backgrnd-night";
+        // if (this.weatherData.icon.endsWith("n")) {
+        //   return "backgrnd-night";
+        // } else {
+        //   return "backgrnd-day";
+        // }
       }
     },
     getWeatherData() {
