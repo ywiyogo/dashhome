@@ -34,32 +34,45 @@ export default {
       xAxis: {
         name: "Hours",
         data: [],
+        nameTextStyle: {
+            fontSize: 20,
+            color: "white",
+            verticalAlign: "top"
+          },
         axisLabel: {
           fontSize: 22,
+          color:"white"
         },
       },
       yAxis: [
         {
           name: "°C",
-          axisLabel: {
+          nameTextStyle: {
             fontSize: 20,
-            color: "#5470c6"
+            color: "white"
           },
-          splitLine:{
+          axisLabel: {
+            fontSize: 30,
+            color: "#5470c6",
+          },
+          splitLine: {
             lineStyle: {
-              type:"dashed"
-            }
+              type: "dashed",
+            },
           },
         },
         {
           name: "°mm",
-          splitLine:{
-            show: false
+          nameTextStyle: {
+            fontSize: 20,
+            color: "white"
+          },
+          splitLine: {
+            show: false,
           },
           axisLabel: {
-            fontSize: 20,
+            fontSize: 30,
             color: "#fac858",
-            
           },
         },
       ],
@@ -106,12 +119,15 @@ export default {
       let now = new Date();
       let hour = now.getHours();
       let _this = this;
+      let rainThreshold = 0.5;
       if (this.p_hourly !== null) {
         for (let i = 0; i < this.p_hourly.length; i++) {
           xdata.push(_this.addHour(hour, i));
           ydata.push(this.p_hourly[i].temp);
           if (this.p_hourly[i].weather[0].main === "Rain") {
-            rainfall.push(this.p_hourly[i].rain["1h"]);
+            if (this.p_hourly[i].rain["1h"] > rainThreshold) {
+              rainfall.push(this.p_hourly[i].rain["1h"]);
+            }
           } else {
             rainfall.push(0);
           }
@@ -153,6 +169,7 @@ export default {
           ];
         }
         this.line.series[1].data = rainfall;
+
         return true;
       } else {
         console.log("WARNING: no value for the hourly data");

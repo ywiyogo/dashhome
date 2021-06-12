@@ -5,7 +5,14 @@
     style="height: 100vh; width: 100%"
   >
     <div
-      class="row full-width mx-auto q-pt-md text-h2 text-white text-center block"
+      class="
+        row
+        full-width
+        mx-auto
+        q-pt-md
+        text-h2 text-white text-center
+        block
+      "
     >
       Weather Dashboard
     </div>
@@ -32,7 +39,11 @@
                 @click="clearData($event)"
                 class="cursor-pointer"
               />
-              <q-icon name="search" />
+              <q-icon
+                name="search"
+                @click="getWeatherBySearch($event)"
+                class="cursor-pointer"
+              />
             </template>
           </q-input>
         </div>
@@ -58,7 +69,12 @@
         </template>
         <template v-else>
           <div
-            class="col justify-center q-my-auto q-mx-auto text-h3 text-weight-light text-white"
+            class="
+              col
+              justify-center
+              q-my-auto q-mx-auto
+              text-h3 text-weight-light text-white
+            "
           >
             <div class="row">
               <div class="col q-my-auto q-mr-lg">{{ weatherData.main }}</div>
@@ -201,8 +217,11 @@ export default {
     },
     getWeatherBySearch() {
       this.$q.loading.show();
+      let _this = this;
+      let cityName = _this.weatherData.cityName;
+      this.clearAll(cityName);
       this.$axios(
-        `${this.apiUrl}?q=${this.weatherData.cityName}&appid=${process.env.API_KEY_WEATHER}&units=metric`
+        `${this.apiUrl}?q=${cityName}&appid=${process.env.API_KEY_WEATHER}&units=metric`
       ).then((response) => {
         // console.log("response by search: ", response);
         this.fillWeatherData(response.data, false);
@@ -216,6 +235,7 @@ export default {
     },
 
     fillWeatherData(responseData, isOneCall) {
+      console.log(responseData);
       if (isOneCall) {
         this.weatherData.temp = responseData.current.temp;
         this.weatherData.icon = responseData.current.weather[0].icon;
@@ -247,23 +267,28 @@ export default {
         ];
         this.weatherData.uvi = null;
       }
+      console.log(this.weatherData);
     },
-    clearData(event) {
+    clearAll(city = "") {
       this.weatherData = {
         cityName: "",
         temp: null,
         icon: "",
         main: "",
         humidity: null,
+        rainfall: null,
         windSpeed: null,
         windDegree: null,
         pressure: null,
-        sunrise: null,
-        sunset: null,
+        sunny: null,
         uvi: null,
         visibility: null,
-        rainfall: null,
+        hourly: null,
+        daily: null,
       };
+    },
+    clearData(event) {
+      this.clearAll();
     },
   },
   computed: {
