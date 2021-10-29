@@ -4,18 +4,7 @@
     :class="backgrndClass"
     style="height: 100vh; width: 100%"
   >
-    <div
-      class="
-        row
-        full-width
-        mx-auto
-        q-pt-md
-        text-h2 text-white text-center
-        block
-      "
-    >
-      Weather Dashboard
-    </div>
+    <div class="row full-width mx-auto q-pt-md text-h2 text-white text-center block">Weather Dashboard</div>
     <div class="row full-width justify-center" style="height: 75%">
       <div class="column q-mr-lg q-mb-xl justify-center">
         <div class="col justify-center" style="max-height: 70px">
@@ -26,7 +15,7 @@
             placeholder="Search"
             dark
             borderless
-            class=""
+            class
           >
             <template v-slot:before>
               <q-icon name="my_location" />
@@ -39,57 +28,39 @@
                 @click="clearData($event)"
                 class="cursor-pointer"
               />
-              <q-icon
-                name="search"
-                @click="getWeatherBySearch($event)"
-                class="cursor-pointer"
-              />
+              <q-icon name="search" @click="getWeatherBySearch($event)" class="cursor-pointer" />
             </template>
           </q-input>
         </div>
-        <div class="col justify-center">
-          <div class="text-h1 text-white text-weight">
-            {{ time }}
-          </div>
+        <div class="col">
+          <div class="text-h4 text-white text-center text-grey-5">{{ todayDate }}</div>
+          <div class="text-h1 text-white text-weight">{{ time }}</div>
         </div>
-        <div class="col justify-center text-h2 text-grey-2 q-mx-auto">
-          {{ weatherData.cityName }}
-        </div>
+        <div class="col justify-center text-h2 text-grey-2 q-mx-auto">{{ weatherData.cityName }}</div>
         <template v-if="!weatherData.temp">
           <div class="col justify-center text-h2">
-            <q-btn
-              class="q-mx-auto block justify-center"
-              @click="getLocation"
-              flat
-            >
+            <q-btn class="q-mx-auto block justify-center" @click="getLocation" flat>
               <q-icon left name="my_location" />
               <div class="text-center">Find my location</div>
             </q-btn>
           </div>
         </template>
         <template v-else>
-          <div
-            class="
-              col
-              justify-center
-              q-my-auto q-mx-auto
-              text-h3 text-weight-light text-white
-            "
-          >
+          <div class="col justify-center q-my-auto q-mx-auto text-h3 text-weight-light text-white">
             <div class="row">
               <div class="col q-my-auto q-mr-lg">{{ weatherData.main }}</div>
               <div class="col">
                 <img
-                  :src="`http://openweathermap.org/img/wn/${weatherData.icon}@2x.png`"
+                  :src="
+                    `http://openweathermap.org/img/wn/${weatherData.icon}@2x.png`
+                  "
                 />
               </div>
             </div>
           </div>
           <div
             class="col justify-center q-mx-auto text-h1 text-weight text-white"
-          >
-            {{ Math.round(weatherData.temp) }}° C
-          </div>
+          >{{ Math.round(weatherData.temp) }}° C</div>
         </template>
       </div>
       <template v-if="weatherData.temp">
@@ -99,7 +70,8 @@
               :p_humidity="weatherData.humidity"
               :p_uvi="weatherData.uvi"
               :p_airquality="40"
-              :p_wind="weatherData.wind_speed"
+              :p_wind="weatherData.windSpeed"
+              :p_sunnytime="weatherData.sunny"
             ></Highlights>
             <div class="col q-mr-xl" style="height=500px;">
               <EchartLine
@@ -107,6 +79,16 @@
                 :p_daily="weatherData.daily"
                 :p_sun="weatherData.sunny"
               ></EchartLine>
+            </div>
+            <div class="row q-px-md justify-evenly">
+              <div class="col-1" v-for="(icon, key) in dailyIcons" :key="icon.name">
+                <div class="column">
+                  <span class="col text-h5">{{ key }}</span>
+                  <div class="col bg-grey-6" style="border-radius: 4em 4em;">
+                    <img class :src="`http://openweathermap.org/img/wn/${icon}@2x.png`" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -126,15 +108,16 @@ export default {
   components: {
     Highlights,
     ApexchartLine,
-    EchartLine,
+    EchartLine
   },
   data() {
     return {
       search: "",
-      localTime: "",
+      todayDate: "",
       interval: null,
       dataInterval: null,
       time: null,
+      dailyIcons: {},
       weatherData: {
         cityName: "",
         temp: null,
@@ -149,7 +132,7 @@ export default {
         uvi: null,
         visibility: null,
         hourly: null,
-        daily: null,
+        daily: null
       },
       lat: null,
       lon: null,
@@ -157,7 +140,7 @@ export default {
       //https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
       oneCallApiUrl: "https://api.openweathermap.org/data/2.5/onecall",
       apikey: null,
-      excludeData: "minutely",
+      excludeData: "minutely"
     };
   },
   methods: {
@@ -172,7 +155,7 @@ export default {
           this.lon = response.data.longitude;
           this.getWeatherByCoords();
         } else {
-          navigator.geolocation.getCurrentPosition((position) => {
+          navigator.geolocation.getCurrentPosition(position => {
             this.lat = position.coords.latitude;
             this.lon = position.coords.longitude;
             this.getWeatherByCoords();
@@ -189,11 +172,18 @@ export default {
     async getWeatherByCoords() {
       try {
         this.$q.loading.show();
+        // update date
+        let dateobj = new Date();
+        this.todayDate =
+          dateobj.toLocaleString("en-US", { day: "numeric" }) +
+          " " +
+          dateobj.toLocaleString("en-US", { weekday: "short" });
         let response = await this.$axios(
           // `${this.apiUrl}?lat=${this.lat}&lon=${this.lon}&appid=${process.env.API_KEY_WEATHER}&units=metric`
           `${this.oneCallApiUrl}?lat=${this.lat}&lon=${this.lon}&exclude=${this.excludeData}&appid=${process.env.API_KEY_WEATHER}&units=metric`
         );
-        // console.log(response)
+        console.log(response.data);
+        console.log(response.data.daily);
         this.fillWeatherData(response.data, true);
         response = await this.$axios(
           `${this.apiUrl}?lat=${this.lat}&lon=${this.lon}&appid=${process.env.API_KEY_WEATHER}&units=metric`
@@ -218,11 +208,16 @@ export default {
     getWeatherBySearch() {
       this.$q.loading.show();
       let _this = this;
+      let dateobj = new Date();
+      this.todayDate =
+        dateobj.toLocaleString("en-US", { day: "numeric" }) +
+        " " +
+        dateobj.toLocaleString("en-US", { weekday: "short" });
       let cityName = _this.weatherData.cityName;
       this.clearAll(cityName);
       this.$axios(
         `${this.apiUrl}?q=${cityName}&appid=${process.env.API_KEY_WEATHER}&units=metric`
-      ).then((response) => {
+      ).then(response => {
         // console.log("response by search: ", response);
         this.fillWeatherData(response.data, false);
         this.$q.loading.hide();
@@ -244,14 +239,27 @@ export default {
         this.weatherData.windSpeed = responseData.current.wind_speed;
         this.weatherData.windDegree = responseData.current.wind_deg;
         this.weatherData.pressure = responseData.current.pressure;
-        this.weatherData.sunny = [
-          responseData.current.sunrise,
-          responseData.current.sunset,
-        ];
         this.weatherData.uvi = responseData.current.uvi;
         this.weatherData.visibility = responseData.current.visibility;
         this.weatherData.hourly = responseData.hourly;
         this.weatherData.daily = responseData.daily;
+        let dateObject = new Date(responseData.current.sunrise * 1000);
+        let sunriseTime = dateObject.toLocaleString("en-US", { hour: '2-digit', minute: '2-digit' })
+        dateObject = new Date(responseData.current.sunset * 1000);
+        let sunsetTime = dateObject.toLocaleString("en-US", { hour: '2-digit', minute: '2-digit' })
+        this.weatherData.sunny = [sunriseTime, sunsetTime]
+
+        console.log("Test: " +
+          responseData.current.wind_speed
+        );
+        for (let i = 1; i < responseData.daily.length - 2; i++) {
+          dateObject = new Date(responseData.daily[i].dt * 1000);
+          let month = dateObject.toLocaleString("en-US", { month: "short" }); // Dec
+          let day = dateObject.toLocaleString("en-US", { day: "numeric" }); // 9
+          let dailydate = day + " " + month;
+          this.dailyIcons[dailydate] = responseData.daily[i].weather[0].icon;
+
+        }
       } else {
         this.weatherData.cityName = responseData.name;
         this.weatherData.temp = responseData.main.temp;
@@ -263,7 +271,7 @@ export default {
         this.weatherData.pressure = responseData.main.pressure;
         this.weatherData.sunny = [
           responseData.sys.sunrise,
-          responseData.sys.sunset,
+          responseData.sys.sunset
         ];
         this.weatherData.uvi = null;
       }
@@ -284,12 +292,12 @@ export default {
         uvi: null,
         visibility: null,
         hourly: null,
-        daily: null,
+        daily: null
       };
     },
     clearData(event) {
       this.clearAll();
-    },
+    }
   },
   computed: {
     backgrndClass() {
@@ -305,7 +313,7 @@ export default {
     getWeatherData() {
       this.FullName;
       return this.FullName !== null && this.FullName !== "";
-    },
+    }
   },
   beforeDestroy() {
     // prevent memory leak
@@ -320,10 +328,15 @@ export default {
         hour: "numeric",
         minute: "numeric",
         second: "numeric",
-        hour12: false,
+        hour12: false
       }).format();
     }, 1000);
-  },
+    let dateobj = new Date();
+    this.todayDate =
+      dateobj.toLocaleString("en-US", { day: "numeric" }) +
+      " " +
+      dateobj.toLocaleString("en-US", { weekday: "short" });
+  }
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="echarts col q-mt-xl">
+  <div class="echarts">
     <template v-if="checkValues()">
       <IEcharts :option="line" />
     </template>

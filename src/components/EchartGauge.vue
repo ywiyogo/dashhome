@@ -1,5 +1,5 @@
 <template>
-  <div id="chart-container" class="gauge col q-mt-xl text-h2">
+  <div id="chart-container" class="gauge column q-mt-sm text-h2">
     <template v-if="checkValues()">
       <IEcharts :option="gauge" />
     </template>

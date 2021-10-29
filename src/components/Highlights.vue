@@ -1,12 +1,95 @@
 <template>
-  <div class="row">
-    <EchartGauge chartname="Humidity" :value="p_humidity"></EchartGauge>
-    <EchartGauge chartname="UV Index" :value="p_uvi"></EchartGauge>
-    <EchartGauge
-      v-if="p_sunnytime"
-      chartname="Sun"
-      :value="p_sunnytime"
-    ></EchartGauge>
+  <div class="row justify-evenly text-grey-5">
+    <div class="column q-mx-sm">
+      <div class="col q-mx-lg q-my-sm">
+        <svg
+          class="text-center bg-grey-5"
+          width="50%"
+          height="120px"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          style="border-radius: 4em 4em; height: 5em; width:5em;"
+        >
+          <image
+            width="70"
+            height="70"
+            color="red"
+            href="~assets/weather-icons/svg/wi-humidity.svg"
+          />
+        </svg>
+      </div>
+      <div class="col text-h6 q-mb-none q-mt-sm">{{ p_humidity }}</div>
+    </div>
+    <div class="column q-mx-sm">
+      <div class="col q-mx-lg q-my-sm">
+        <svg
+          class="text-center bg-grey-5"
+          width="50%"
+          height="120px"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          style="border-radius: 4em 4em; height: 5em; width:5em;"
+        >
+          <image width="70" height="70" color="red" href="~assets/weather-icons/svg/wi-hot.svg" />
+        </svg>
+      </div>
+      <div class="col text-h6 q-mb-none q-mt-sm">{{ p_uvi }}</div>
+    </div>
+    <div class="column q-mx-sm">
+      <div class="col q-mx-lg q-my-sm">
+        <svg
+          class="text-center bg-grey-5"
+          width="50%"
+          height="120px"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          style="border-radius: 4em 4em; height: 5em; width:5em;"
+        >
+          <image
+            width="70"
+            height="70"
+            color="red"
+            href="~assets/weather-icons/svg/wi-strong-wind.svg"
+          />
+        </svg>
+      </div>
+      <div class="col text-h6 q-mb-none q-mt-sm">{{ p_wind }} m/s</div>
+    </div>
+    <div class="column q-mx-sm">
+      <div class="col q-mx-lg q-my-sm">
+        <svg
+          class="text-center bg-grey-5"
+          width="50%"
+          height="120px"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          style="border-radius: 4em 4em; height: 5em; width:5em;"
+        >
+          <image width="70" height="70" color="red" href="~assets/weather-icons/svg/wi-sunrise.svg" />
+        </svg>
+      </div>
+      <div class="col text-h6 q-mb-none q-mt-sm">{{ p_sunnytime[0] }}</div>
+    </div>
+    <div class="column q-mx-sm">
+      <div class="col q-my-sm">
+        <svg
+          class="text-center bg-grey-5 q-my-none"
+          width="50%"
+          height="120px"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          style="border-radius: 4em 4em; height: 5em; width:5em;"
+        >
+          <image width="70" height="70" color="red" href="~assets/weather-icons/svg/wi-sunset.svg" />
+        </svg>
+        <!-- <img
+          class="bg-grey-6 text-grey-1"
+          src="~assets/weather-icons/svg/wi-sunset.svg"
+          style="border-radius: 4em 4em; height: 5em; width:5em; fill: #fff;"
+        />-->
+      </div>
+      <div class="col text-h6 q-mb-none q-mt-sm">{{ p_sunnytime[1] }}</div>
+    </div>
   </div>
 </template>
 
@@ -29,9 +112,6 @@ export default {
       type: Number,
     },
     p_sunnytime: null,
-    p_sunset: {
-      type: Number,
-    },
     p_airquality: {
       type: Number,
     },
@@ -45,6 +125,7 @@ export default {
       this.humidity = this.p_humidity;
       this.uvi = p_uvi;
       this.airQuality = this.p_airquality;
+
     },
   },
   methods: {
@@ -53,6 +134,7 @@ export default {
       this.humidity = this.p_humidity;
       this.uvi = p_uvi;
       this.airQuality = this.p_airQuality;
+
     },
   },
   data() {
@@ -62,7 +144,6 @@ export default {
       sun: [20],
       uvi: 0,
       polarSeries: [0, 0, 0, 5, 0, 0],
-
       polarOptions: {
         chart: {
           type: "polarArea",
