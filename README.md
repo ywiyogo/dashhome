@@ -4,11 +4,11 @@ A weather dashboard as a kiosk application using the Quasar Framework. There are
 
 Start menu of the app as the mobile view mode:
 
-![Dashhome](./docs/screenshot1.png)
+![Dashhome](./misc/screenshot1.png)
 
 The screenshot after choosing the automatic location finder as the desktop view mode:
 
-![Dashhome](./docs/screenshot2.png)
+![Dashhome](./misc/screenshot2.png)
 
 The top icons above the chart represent the humidity, UV index, wind speed, sunrise and sunset.
 
