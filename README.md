@@ -20,7 +20,14 @@ export PATH=$PWD/node_modules/.bin:$PATH
 
 ## Getting started
 
-## API Key from OpenWeather
+### Clone to kiosk PC
+
+```
+git clone https://github.com/ywiyogo/dashhome.git ~/apps/dashhome
+git submodule update --init --recursive
+```
+
+### API Key from OpenWeather
 
 * Signup at openweathermap.org and get an API key. 
 * Create a file called `.env` in this project root folder, copy your API key and set the update rate in milliseconds.
@@ -41,6 +48,30 @@ quasar dev
 ```bash
 quasar build
 ```
+
+### Setup the systemd autostart
+
+1. Create a new service file _~/.config/systemd/user/dashhome.service_ with this content
+
+```
+[Unit]
+Description=Dashhome
+
+Wants=network.target
+After=syslog.target network-online.target
+PartOf=graphical-session.target
+[Service]
+Type=simple
+ExecStart=/usr/bin/firefox --kiosk ~/apps/dashhome/dist/spa/index.html &
+Restart=on-failure
+RestartSec=60
+KillMode=process
+
+[Install]
+WantedBy=default.target
+```
+
+2. Enable service for autostart`systemctl --user enable dashhome && systemctl --user start dashhome`
 
 ### Customize the configuration
 See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
