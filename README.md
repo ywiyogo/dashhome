@@ -10,9 +10,7 @@ The screenshot after choosing the automatic location finder as the desktop view 
 
 ![Dashhome](./docs/screenshot2.png)
 
-
-![Dashhome](./docs/screenshot3.png)
-
+The top icons above the chart represent the humidity, UV index, wind speed, sunrise and sunset.
 
 ## Install the dependencies
 ```bash

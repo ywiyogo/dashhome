@@ -4,7 +4,7 @@
     :class="backgrndClass"
     style="height: 100vh; width: 100%"
   >
-    <div class="row full-width mx-auto q-pt-md text-h2 text-white text-center block">Weather Dashboard</div>
+    <div class="row full-width mx-auto q-pt-md text-h2 text-white text-center block">Dashhome</div>
     <div class="row full-width justify-center" style="height: 75%">
       <div class="column q-mr-lg q-mb-xl justify-center">
         <div class="col justify-center" style="max-height: 70px">
