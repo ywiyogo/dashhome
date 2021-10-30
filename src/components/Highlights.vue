@@ -1,7 +1,7 @@
 <template>
   <div class="row justify-evenly text-grey-5 q-pt-lg">
-    <div class="column q-mx-sm">
-      <div class="col q-mx-lg">
+    <div class="column">
+      <div class="col">
         <svg
           class="text-center"
           width="50%"
@@ -21,8 +21,8 @@
       </div>
       <div class="col text-h6 q-mb-none q-mt-sm">{{ p_humidity }}</div>
     </div>
-    <div class="column q-mx-sm">
-      <div class="col q-mx-lg q-my-sm">
+    <div class="column">
+      <div class="col">
         <svg
           class="text-center"
           width="50%"
@@ -42,8 +42,8 @@
       </div>
       <div class="col text-h6 q-mb-none q-mt-sm">{{ p_uvi }}</div>
     </div>
-    <div class="column q-mx-sm">
-      <div class="col q-mx-lg q-my-sm">
+    <div class="column">
+      <div class="col">
         <svg
           class="text-center"
           width="50%"
@@ -63,8 +63,8 @@
       </div>
       <div class="col text-h6 q-mb-none q-mt-sm">{{ p_wind }} m/s</div>
     </div>
-    <div class="column q-mx-sm">
-      <div class="col q-mx-lg q-my-sm">
+    <div class="column">
+      <div class="col">
         <svg
           class="text-center"
           width="50%"
@@ -84,8 +84,8 @@
       </div>
       <div class="col text-h6 q-mb-none q-mt-sm">{{ p_sunnytime[0] }}</div>
     </div>
-    <div class="column q-mx-sm">
-      <div class="col q-my-sm">
+    <div class="column">
+      <div class="col">
         <svg
           class="text-center q-my-none"
           width="50%"

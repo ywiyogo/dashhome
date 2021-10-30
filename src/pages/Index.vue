@@ -3,95 +3,105 @@
     <div class="column" style="width:100%">
       <div class="col-xs-1 full-width p-mx-lg q-pt-md text-h2 text-white text-center block">Dashhome</div>
       <div class="col-xs-10 col-md-10 full-width justify-evenly">
+        <!-- Row that contains time and charts. Do not remove justify-evenly -->
         <div class="row q-mx-auto justify-evenly">
           <div class="col-xs-8 col-md-3 q-pt-lg">
+            <!-- Time flex column -->
             <div class="column justify-evenly">
-            <div class="row q-mx-auto">
-              <q-input
-                v-model="weatherData.cityName"
-                label="Search city"
-                @keyup.enter="getWeatherBySearch"
-                placeholder="Search"
-                dark
-                borderless
-                class="col"
-              >
-                <template v-slot:before>
-                  <q-icon name="my_location" />
-                </template>
+              <div class="row q-mx-auto items-center">
+                <q-input
+                  v-model="weatherData.cityName"
+                  label="Search city"
+                  @keyup.enter="getWeatherBySearch"
+                  placeholder="Search"
+                  dark
+                  borderless
+                  class="col"
+                >
+                  <template v-slot:before>
+                    <q-icon name="my_location" />
+                  </template>
 
-                <template v-slot:append>
-                  <q-icon
-                    v-if="weatherData.cityName !== ''"
-                    name="close"
-                    @click="clearData($event)"
-                    class="col cursor-pointer"
-                  />
-                  <q-icon name="search" @click="getWeatherBySearch($event)" class="cursor-pointer" />
-                </template>
-              </q-input>
-            </div>
-            <div class="column" style="max-height: 320px;">
-              <div class="col-3 text-h4 text-white text-center text-grey-5">{{ todayDate }}</div>
-              <div class="col-8 text-h1 text-white text-center text-weight">{{ time }}</div>
-            </div>
-            <div class="col-2 text-h2 text-grey-2 q-mx-auto q-pt-lg">{{ weatherData.cityName }}</div>
-            <template v-if="!weatherData.temp">
-              <div class="col-2 text-h2">
-                <q-btn class="q-mx-auto block justify-center" @click="getLocation" flat>
-                  <q-icon left name="my_location" />
-                  <div class="text-center">Find my location</div>
-                </q-btn>
-              </div>
-            </template>
-            <template v-else>
-              <div class="col-2 q-my-auto q-mx-auto text-h3 text-weight-light text-white">
-                <div class="row">
-                  <div class="col q-my-auto q-mr-lg">{{ weatherData.main }}</div>
-                  <div class="col">
-                    <img
-                      :src="
-                        `http://openweathermap.org/img/wn/${weatherData.icon}@2x.png`
-                      "
-                      style="filter: saturate(200%) brightness(180%) contrast(200%)"
+                  <template v-slot:append>
+                    <q-icon
+                      v-if="weatherData.cityName !== ''"
+                      name="close"
+                      @click="clearData($event)"
+                      class="col cursor-pointer"
                     />
+                    <q-icon
+                      name="search"
+                      @click="getWeatherBySearch($event)"
+                      class="cursor-pointer"
+                    />
+                  </template>
+                </q-input>
+              </div>
+              <div class="column" style="max-height: 320px;">
+                <div class="col-3 text-h4 text-white text-center text-grey-5">{{ todayDate }}</div>
+                <div class="col-8 text-h1 text-white text-center text-weight">{{ time }}</div>
+              </div>
+              <div class="col-2 text-h2 text-grey-2 q-mx-auto q-pt-lg">{{ weatherData.cityName }}</div>
+              <template v-if="!weatherData.temp">
+                <div class="col-2 text-h2">
+                  <q-btn class="q-mx-auto block justify-center" @click="getLocation" flat>
+                    <q-icon left name="my_location" />
+                    <div class="text-center">Find my location</div>
+                  </q-btn>
+                </div>
+              </template>
+              <template v-else>
+                <div class="col-3 q-my-auto q-mx-auto text-h3 text-weight-light text-white">
+                  <div class="row">
+                    <div class="col q-my-auto q-mr-lg">{{ weatherData.main }}</div>
+                    <div class="col">
+                      <img
+                        :src="
+                          `http://openweathermap.org/img/wn/${weatherData.icon}@2x.png`
+                        "
+                        style="filter: saturate(200%) brightness(180%) contrast(200%)"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div
-                class="col q-mx-auto text-h1 text-weight text-white"
-              >{{ Math.round(weatherData.temp) }}° C</div>
-            </template>
+                <div
+                  class="col-2 q-mx-auto text-h1 text-weight text-white"
+                >{{ Math.round(weatherData.temp) }}° C</div>
+              </template>
             </div>
           </div>
+
           <template v-if="weatherData.temp">
-            <div class="col-xs-8 col-md-9 column justify-evenly">
-              <div class="col text-white text-center">
-                <Highlights
-                  :p_humidity="weatherData.humidity"
-                  :p_uvi="weatherData.uvi"
-                  :p_airquality="40"
-                  :p_wind="weatherData.windSpeed"
-                  :p_sunnytime="weatherData.sunny"
-                ></Highlights>
-                <div class="col">
-                  <EchartLine
-                    :p_hourly="weatherData.hourly"
-                    :p_daily="weatherData.daily"
-                    :p_sun="weatherData.sunny"
-                  ></EchartLine>
-                </div>
-                <div class="col q-px-md justify-evenly">
-                  <div class="row">
-                    <div class="col" v-for="(icon, key) in dailyIcons" :key="icon.name">
-                      <div class="column">
-                        <span class="col text-h5">{{ key }}</span>
-                        <div class="col" style="border-radius: 4em 4em;">
-                          <img
-                            class
-                            :src="`http://openweathermap.org/img/wn/${icon}@2x.png`"
-                            style="filter: saturate(200%) brightness(180%) contrast(200%)"
-                          />
+            <div class="col-xs-8 col-md-9">
+              <!-- Visualization flex column -->
+              <div class="column justify-evenly">
+                <div class="col text-white text-center">
+                  <Highlights
+                    :p_humidity="weatherData.humidity"
+                    :p_uvi="weatherData.uvi"
+                    :p_airquality="40"
+                    :p_wind="weatherData.windSpeed"
+                    :p_sunnytime="weatherData.sunny"
+                  ></Highlights>
+                  <div class="col-9">
+                    <EchartLine
+                      :p_hourly="weatherData.hourly"
+                      :p_daily="weatherData.daily"
+                      :p_sun="weatherData.sunny"
+                    ></EchartLine>
+                  </div>
+                  <div class="col q-px-md justify-evenly">
+                    <div class="row">
+                      <div class="col" v-for="(icon, key) in dailyIcons" :key="icon.name">
+                        <div class="column">
+                          <span class="col text-h5">{{ key }}</span>
+                          <div class="col" style="border-radius: 4em 4em;">
+                            <img
+                              class
+                              :src="`http://openweathermap.org/img/wn/${icon}@2x.png`"
+                              style="filter: saturate(200%) brightness(180%) contrast(200%)"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
