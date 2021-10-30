@@ -1,9 +1,9 @@
 <template>
-  <div class="row justify-evenly text-grey-5">
+  <div class="row justify-evenly text-grey-5 q-pt-lg">
     <div class="column q-mx-sm">
-      <div class="col q-mx-lg q-my-sm">
+      <div class="col q-mx-lg">
         <svg
-          class="text-center bg-grey-5"
+          class="text-center"
           width="50%"
           height="120px"
           version="1.1"
@@ -15,6 +15,7 @@
             height="70"
             color="red"
             href="~assets/weather-icons/svg/wi-humidity.svg"
+            style="filter: invert(88%) sepia(0%) saturate(1565%) hue-rotate(3deg) brightness(92%) contrast(77%);"
           />
         </svg>
       </div>
@@ -23,14 +24,20 @@
     <div class="column q-mx-sm">
       <div class="col q-mx-lg q-my-sm">
         <svg
-          class="text-center bg-grey-5"
+          class="text-center"
           width="50%"
           height="120px"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
           style="border-radius: 4em 4em; height: 5em; width:5em;"
         >
-          <image width="70" height="70" color="red" href="~assets/weather-icons/svg/wi-hot.svg" />
+          <image
+            width="70"
+            height="70"
+            color="red"
+            href="~assets/weather-icons/svg/wi-hot.svg"
+            style="filter: invert(88%) sepia(0%) saturate(1565%) hue-rotate(3deg) brightness(92%) contrast(77%);"
+          />
         </svg>
       </div>
       <div class="col text-h6 q-mb-none q-mt-sm">{{ p_uvi }}</div>
@@ -38,7 +45,7 @@
     <div class="column q-mx-sm">
       <div class="col q-mx-lg q-my-sm">
         <svg
-          class="text-center bg-grey-5"
+          class="text-center"
           width="50%"
           height="120px"
           version="1.1"
@@ -50,6 +57,7 @@
             height="70"
             color="red"
             href="~assets/weather-icons/svg/wi-strong-wind.svg"
+            style="filter: invert(88%) sepia(0%) saturate(1565%) hue-rotate(3deg) brightness(92%) contrast(77%);"
           />
         </svg>
       </div>
@@ -58,14 +66,20 @@
     <div class="column q-mx-sm">
       <div class="col q-mx-lg q-my-sm">
         <svg
-          class="text-center bg-grey-5"
+          class="text-center"
           width="50%"
           height="120px"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
           style="border-radius: 4em 4em; height: 5em; width:5em;"
         >
-          <image width="70" height="70" color="red" href="~assets/weather-icons/svg/wi-sunrise.svg" />
+          <image
+            width="70"
+            height="70"
+            color="red"
+            href="~assets/weather-icons/svg/wi-sunrise.svg"
+            style="filter: invert(88%) sepia(0%) saturate(1565%) hue-rotate(3deg) brightness(92%) contrast(77%);"
+          />
         </svg>
       </div>
       <div class="col text-h6 q-mb-none q-mt-sm">{{ p_sunnytime[0] }}</div>
@@ -73,20 +87,21 @@
     <div class="column q-mx-sm">
       <div class="col q-my-sm">
         <svg
-          class="text-center bg-grey-5 q-my-none"
+          class="text-center q-my-none"
           width="50%"
           height="120px"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
           style="border-radius: 4em 4em; height: 5em; width:5em;"
         >
-          <image width="70" height="70" color="red" href="~assets/weather-icons/svg/wi-sunset.svg" />
+          <image
+            width="70"
+            height="70"
+            color="red"
+            href="~assets/weather-icons/svg/wi-sunset.svg"
+            style="filter: invert(88%) sepia(0%) saturate(1565%) hue-rotate(3deg) brightness(92%) contrast(77%);"
+          />
         </svg>
-        <!-- <img
-          class="bg-grey-6 text-grey-1"
-          src="~assets/weather-icons/svg/wi-sunset.svg"
-          style="border-radius: 4em 4em; height: 5em; width:5em; fill: #fff;"
-        />-->
       </div>
       <div class="col text-h6 q-mb-none q-mt-sm">{{ p_sunnytime[1] }}</div>
     </div>

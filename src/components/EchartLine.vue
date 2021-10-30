@@ -49,11 +49,11 @@ export default {
           name: "°C",
           nameTextStyle: {
             fontSize: 20,
-            color: "white"
+            color: "#ffd54f"
           },
           axisLabel: {
             fontSize: 30,
-            color: "#5470c6",
+            color: "#ffd54f",
           },
           splitLine: {
             lineStyle: {
@@ -65,14 +65,14 @@ export default {
           name: "°mm",
           nameTextStyle: {
             fontSize: 20,
-            color: "white"
+            color: "#81d4fa"
           },
           splitLine: {
             show: false,
           },
           axisLabel: {
             fontSize: 30,
-            color: "#fac858",
+            color: "#81d4fa",
           },
         },
       ],
@@ -83,6 +83,9 @@ export default {
           data: [],
           lineStyle: {
             width: 3,
+          },
+          itemStyle: {
+            color: "#ffd54f",
           },
           markArea: {
             itemStyle: {
@@ -96,7 +99,7 @@ export default {
           type: "bar",
           yAxisIndex: 1,
           itemStyle: {
-            color: "#fac858",
+            color: "#81d4fa",
           },
           data: [],
         },
