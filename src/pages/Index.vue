@@ -73,11 +73,11 @@
               :p_wind="weatherData.windSpeed"
               :p_sunnytime="weatherData.sunny"
             ></Highlights>
-              <EchartLine
-                :p_hourly="weatherData.hourly"
-                :p_daily="weatherData.daily"
-                :p_sun="weatherData.sunny"
-              ></EchartLine>
+            <EchartLine
+              :p_hourly="weatherData.hourly"
+              :p_daily="weatherData.daily"
+              :p_sun="weatherData.sunny"
+            ></EchartLine>
             <div class="col-auto row justify-around">
               <div class="col-auto column" v-for="(icon, key) in dailyIcons" :key="icon.name">
                 <span class="col-auto text-h5 text-center">{{ key }}</span>
@@ -182,8 +182,6 @@ export default {
           // `${this.apiUrl}?lat=${this.lat}&lon=${this.lon}&appid=${process.env.API_KEY_WEATHER}&units=metric`
           `${this.oneCallApiUrl}?lat=${this.lat}&lon=${this.lon}&exclude=${this.excludeData}&appid=${process.env.API_KEY_WEATHER}&units=metric`
         );
-        console.log(response.data);
-        console.log(response.data.daily);
         this.fillWeatherData(response.data, true);
         response = await this.$axios(
           `${this.apiUrl}?lat=${this.lat}&lon=${this.lon}&appid=${process.env.API_KEY_WEATHER}&units=metric`
@@ -230,7 +228,6 @@ export default {
     },
 
     fillWeatherData(responseData, isOneCall) {
-      console.log(responseData);
       if (isOneCall) {
         this.weatherData.temp = responseData.current.temp;
         this.weatherData.icon = responseData.current.weather[0].icon;
@@ -248,11 +245,9 @@ export default {
         dateObject = new Date(responseData.current.sunset * 1000);
         let sunsetTime = dateObject.toLocaleString("en-US", { hour: '2-digit', minute: '2-digit' })
         this.weatherData.sunny = [sunriseTime, sunsetTime]
-
-        console.log("Test: " +
-          responseData.current.wind_speed
-        );
-        for (let i = 1; i < responseData.daily.length - 2; i++) {
+        // show max 5 days weather forcast
+        let shownDays = responseData.daily.length > 6 ? 6 : responseData.daily.length
+        for (let i = 1; i < shownDays; i++) {
           dateObject = new Date(responseData.daily[i].dt * 1000);
           let month = dateObject.toLocaleString("en-US", { month: "short" }); // Dec
           let day = dateObject.toLocaleString("en-US", { day: "numeric" }); // 9
