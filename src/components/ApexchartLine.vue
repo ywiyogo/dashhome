@@ -1,33 +1,18 @@
 <template>
-  <q-card class="">
+  <q-card class>
     <div id="chart">
-      <apexchart
-        type="line"
-        height="350"
-        :options="chartOptions"
-        :series="series"
-      ></apexchart>
+      <apexchart type="line" height="350" :options="chartOptions" :series="series"></apexchart>
     </div>
     <q-tab-panels v-model="ishourly" animated class="bg-primary text-white">
       <q-tab-panel name="mails">
         <div id="chart">
-          <apexchart
-            type="line"
-            height="350"
-            :options="chartOptions"
-            :series="series"
-          ></apexchart>
+          <apexchart type="line" height="350" :options="chartOptions" :series="series"></apexchart>
         </div>
       </q-tab-panel>
 
       <q-tab-panel name="alarms">
         <div id="chart">
-          <apexchart
-            type="line"
-            height="350"
-            :options="chartOptions"
-            :series="series"
-          ></apexchart>
+          <apexchart type="line" height="350" :options="chartOptions" :series="series"></apexchart>
         </div>
       </q-tab-panel>
     </q-tab-panels>
@@ -72,7 +57,7 @@ export default {
           toolbar: {
             show: false,
           },
-          background:"#000"
+          background: "#000"
         },
         colors: ["#77B6EA", "#545454"],
         dataLabels: {

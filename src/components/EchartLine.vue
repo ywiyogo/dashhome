@@ -1,17 +1,17 @@
 <template>
-  <div class="echarts col-auto row">
+  <div class="col-auto row">
     <template v-if="checkValues()">
-      <IEcharts :option="line" />
+      <vue-echarts :option="line" style="height: 50vh; width:75vw;" ref="chart" />
     </template>
   </div>
 </template>
 
-<script type="text/babel">
-import IEcharts from "vue-echarts-v3/src/full.js";
+<script>
+import { VueEcharts } from 'vue3-echarts';
 export default {
   name: "view",
   components: {
-    IEcharts,
+    VueEcharts,
   },
   props: {
     p_hourly: null,
@@ -35,13 +35,13 @@ export default {
         name: "Hours",
         data: [],
         nameTextStyle: {
-            fontSize: 20,
-            color: "white",
-            verticalAlign: "top"
-          },
+          fontSize: 20,
+          color: "white",
+          verticalAlign: "top"
+        },
         axisLabel: {
           fontSize: 22,
-          color:"white"
+          color: "white"
         },
       },
       yAxis: [
@@ -184,9 +184,3 @@ export default {
 };
 </script>
 
-<style scoped>
-.echarts {
-  height: 500px;
-  width: 100%;
-}
-</style>
