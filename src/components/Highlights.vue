@@ -1,27 +1,25 @@
 <template>
-  <div class="row justify-evenly text-grey-5 q-pt-lg">
-    <div class="column">
-      <div class="col">
-        <svg
-          class="text-center"
-          width="50%"
-          height="120px"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          style="border-radius: 4em 4em; height: 5em; width:5em;"
-        >
-          <image
-            width="70"
-            height="70"
-            color="red"
-            href="~assets/weather-icons/svg/wi-humidity.svg"
-            style="filter: invert(88%) sepia(0%) saturate(1565%) hue-rotate(3deg) brightness(92%) contrast(77%);"
-          />
-        </svg>
-      </div>
-      <div class="col text-h6 q-mb-none q-mt-sm">{{ p_humidity }}</div>
+  <div class="col-auto row justify-around text-grey-5 q-pt-lg">
+    <div class="col-auto column">
+      <svg
+        class="col-auto text-center"
+        width="50%"
+        height="120px"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        style="border-radius: 4em 4em; height: 5em; width:5em;"
+      >
+        <image
+          width="70"
+          height="70"
+          color="red"
+          href="~assets/weather-icons/svg/wi-humidity.svg"
+          style="filter: invert(88%) sepia(0%) saturate(1565%) hue-rotate(3deg) brightness(92%) contrast(77%);"
+        />
+      </svg>
+      <div class="col-auto text-h6 text-center q-mb-none q-mt-sm">{{ p_humidity }}</div>
     </div>
-    <div class="column">
+    <div class="col-auto column">
       <div class="col">
         <svg
           class="text-center"
@@ -42,7 +40,7 @@
       </div>
       <div class="col text-h6 q-mb-none q-mt-sm">{{ p_uvi }}</div>
     </div>
-    <div class="column">
+    <div class="col-auto column">
       <div class="col">
         <svg
           class="text-center"
@@ -63,7 +61,7 @@
       </div>
       <div class="col text-h6 q-mb-none q-mt-sm">{{ p_wind }} m/s</div>
     </div>
-    <div class="column">
+    <div class="col-auto column">
       <div class="col">
         <svg
           class="text-center"
@@ -84,7 +82,7 @@
       </div>
       <div class="col text-h6 q-mb-none q-mt-sm">{{ p_sunnytime[0] }}</div>
     </div>
-    <div class="column">
+    <div class="col-auto column">
       <div class="col">
         <svg
           class="text-center q-my-none"

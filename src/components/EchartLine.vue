@@ -1,5 +1,5 @@
 <template>
-  <div class="echarts">
+  <div class="echarts col-auto row">
     <template v-if="checkValues()">
       <IEcharts :option="line" />
     </template>

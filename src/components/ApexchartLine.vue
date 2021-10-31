@@ -1,17 +1,5 @@
 <template>
-  <q-card class="q-mx-sm">
-    <q-tabs
-      v-model="ishourly"
-      dense
-      class="bg-grey-3 text-grey-7"
-      active-color="primary"
-      indicator-color="purple"
-      align="justify"
-    >
-      <q-tab name="today" label="today" />
-      <q-tab name="week" label="week" />
-    </q-tabs>
-
+  <q-card class="">
     <div id="chart">
       <apexchart
         type="line"
@@ -84,6 +72,7 @@ export default {
           toolbar: {
             show: false,
           },
+          background:"#000"
         },
         colors: ["#77B6EA", "#545454"],
         dataLabels: {
@@ -133,4 +122,12 @@ export default {
 </script>
 
 <style scoped lang="sass">
+.q-page
+  max-height: 100vh
+  min-height: 100vh
+  background: linear-gradient(to left, #fc5c7d, #6a82fb) /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  &.backgrnd-night
+    background: linear-gradient(to bottom, #232527, #414346)
+  &.backgrnd-day
+    background: linear-gradient(to bottom, #00b09b, #96c93d)
 </style>
