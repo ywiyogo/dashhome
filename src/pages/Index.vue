@@ -2,7 +2,7 @@
   <q-page class="flex q-pa justify-center" :class="backgrndClass" style="width:100%;">
     <div class="column justify-between" style="width:100%">
       <div class="col-1 full-width p-mx-lg q-pt-md text-h2 text-white text-center block">Dashhome</div>
-      <div class="col-10-auto full-width row justify-evenly">
+      <div class="col-10-auto full-width row justify-evenly text-white">
         <!-- Row that contains time and charts. Do not remove justify-evenly -->
         <div class="col-12 col-md-3 column justify-between">
           <!-- Time flex column -->
@@ -58,9 +58,7 @@
                 </div>
               </div>
             </div>
-            <div
-              class="col q-mx-auto text-h1 text-weight text-white"
-            >{{ Math.round(weatherData.temp) }}° C</div>
+            <div class="col q-mx-auto text-h1 text-weight">{{ Math.round(weatherData.temp) }}° C</div>
           </template>
         </div>
         <template v-if="weatherData.temp">
@@ -73,11 +71,11 @@
               :p_wind="weatherData.windSpeed"
               :p_sunnytime="weatherData.sunny"
             ></Highlights>
-              <EchartLine
-                :p_hourly="weatherData.hourly"
-                :p_daily="weatherData.daily"
-                :p_sun="weatherData.sunny"
-              ></EchartLine>
+            <EchartLine
+              :p_hourly="weatherData.hourly"
+              :p_daily="weatherData.daily"
+              :p_sun="weatherData.sunny"
+            ></EchartLine>
             <div class="col-auto row justify-around">
               <div class="col-auto column" v-for="(icon, key) in dailyIcons" :key="icon.name">
                 <span class="col-auto text-h5 text-center">{{ key }}</span>
