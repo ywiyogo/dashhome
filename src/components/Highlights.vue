@@ -114,24 +114,6 @@ export default {
       type: Number,
     },
   },
-  computed: {
-    updateData() {
-      console.log("computed Highlicht components");
-      this.humidity = this.p_humidity;
-      this.uvi = p_uvi;
-      this.airQuality = this.p_airquality;
-
-    },
-  },
-  methods: {
-    update() {
-      console.log("methods Highlicht components");
-      this.humidity = this.p_humidity;
-      this.uvi = p_uvi;
-      this.airQuality = this.p_airQuality;
-
-    },
-  },
   data() {
     return {
       humidity: 0,

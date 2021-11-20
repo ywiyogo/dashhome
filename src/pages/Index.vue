@@ -69,7 +69,7 @@
               :p_uvi="weatherData.uvi"
               :p_airquality="40"
               :p_wind="weatherData.windSpeed"
-              :p_sunnytime="weatherData.sunny"
+              :p_sunnytime="weatherData.sunny[0]"
             ></Highlights>
             <EchartLine
               :p_hourly="weatherData.hourly"
@@ -176,15 +176,19 @@ export default {
           dateobj.toLocaleString("en-US", { day: "numeric" }) +
           " " +
           dateobj.toLocaleString("en-US", { weekday: "short" });
+
         let response = await this.$axios(
           // `${this.apiUrl}?lat=${this.lat}&lon=${this.lon}&appid=${process.env.API_KEY_WEATHER}&units=metric`
           `${this.oneCallApiUrl}?lat=${this.lat}&lon=${this.lon}&exclude=${this.excludeData}&appid=${process.env.API_KEY_WEATHER}&units=metric`
-        );
-        this.fillWeatherData(response.data, true);
-        response = await this.$axios(
-          `${this.apiUrl}?lat=${this.lat}&lon=${this.lon}&appid=${process.env.API_KEY_WEATHER}&units=metric`
-        );
-        this.weatherData.cityName = response.data.name;
+        ).then(response => {
+          console.log(response)
+          // copy the content of text.json data for debug
+          // var response = {data:{}}
+          // response["data"] = {}
+
+          this.fillWeatherData(response.data, true);
+          this.weatherData.cityName = response.data.name;
+        });
       } catch (e) {
         // console.error(e);
         let alertmsg =
@@ -227,6 +231,7 @@ export default {
 
     fillWeatherData(responseData, isOneCall) {
       if (isOneCall) {
+        console.log(responseData)
         this.weatherData.temp = responseData.current.temp;
         this.weatherData.icon = responseData.current.weather[0].icon;
         this.weatherData.main = responseData.current.weather[0].main;
@@ -242,7 +247,12 @@ export default {
         let sunriseTime = dateObject.toLocaleString("en-US", { hour: '2-digit', minute: '2-digit' })
         dateObject = new Date(responseData.current.sunset * 1000);
         let sunsetTime = dateObject.toLocaleString("en-US", { hour: '2-digit', minute: '2-digit' })
-        this.weatherData.sunny = [sunriseTime, sunsetTime]
+        // get next sunrise 
+        dateObject = new Date(responseData.daily[1].sunrise * 1000);
+        var nextsunrise = dateObject.toLocaleString("en-US", { hour: '2-digit', minute: '2-digit' })
+        dateObject = new Date(responseData.daily[1].sunset * 1000);
+        var nextsunset = dateObject.toLocaleString("en-US", { hour: '2-digit', minute: '2-digit' })
+        this.weatherData.sunny = [[sunriseTime, sunsetTime], [nextsunrise, nextsunset]]
         // show max 5 days weather forcast
         let shownDays = responseData.daily.length > 6 ? 6 : responseData.daily.length
         for (let i = 1; i < shownDays; i++) {

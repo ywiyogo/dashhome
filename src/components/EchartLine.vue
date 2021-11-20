@@ -1,8 +1,6 @@
 <template>
   <div class="col-auto row">
-    <template v-if="checkValues()">
-      <vue-echarts :option="line" style="height: 50vh; width:75vw;" ref="chart" />
-    </template>
+    <vue-echarts :option="option" style="height: 50vh; width:75vw;" ref="chart" :key="checkValues" />
   </div>
 </template>
 
@@ -20,7 +18,7 @@ export default {
   },
   data: () => ({
     loading: true,
-    line: {
+    option: {
       title: {
         text: "Temperatures and Rainfall",
         left: "center",
@@ -114,8 +112,9 @@ export default {
       }
       return res;
     },
+  },
+  computed: {
     checkValues() {
-      console.log("called checkValues()");
       let xdata = [];
       let ydata = [];
       let rainfall = [];
@@ -135,44 +134,41 @@ export default {
             rainfall.push(0);
           }
         }
-        this.line.xAxis.data = xdata;
-        this.line.series[0].data = ydata;
+        this.option.xAxis.data = xdata;
+        this.option.series[0].data = ydata;
         // use parameter 0 for epoch
-        const sunriseDate = new Date(0);
-        const sunsetDate = new Date(0);
-        sunriseDate.setUTCSeconds(this.p_sun[0]);
-        sunsetDate.setUTCSeconds(this.p_sun[1]);
+        let xAxisSunRise = parseInt(this.p_sun[0][0].substring(0, 2));
+        let xAxisSunSet = parseInt(this.p_sun[0][1].substring(0, 2)) + 12;
 
-        let xAxisSunRise = sunriseDate.getHours();
-        let xAxisSunSet = sunsetDate.getHours();
-        let showSunArea = true;
-        if (hour > xAxisSunRise) {
-          if (hour < sunsetDate.getHours()) {
-            xAxisSunRise = 0;
-            xAxisSunSet = xAxisSunSet - hour;
+        if (hour >= xAxisSunRise) {
+          if (hour < xAxisSunSet) {
+            xAxisSunRise = hour;
+            xAxisSunSet = xAxisSunSet;
           } else {
-            showSunArea = false;
+            var offset = 24 - hour
+            xAxisSunRise = offset + parseInt(this.p_sun[1][0].substring(0, 2));
+            xAxisSunSet = offset + 12 + parseInt(this.p_sun[1][1].substring(0, 2));
           }
         } else {
           xAxisSunRise = xAxisSunRise - hour;
           xAxisSunSet = xAxisSunSet - hour;
         }
         // Add a sun duration area
-        if (showSunArea) {
-          this.line.series[0].markArea.data = [
-            [
-              {
-                name: "Sun Duration",
-                xAxis: xAxisSunRise,
-              },
-              {
-                xAxis: xAxisSunSet,
-              },
-            ],
-          ];
+        this.option.series[0].markArea.data = [
+          [
+            {
+              name: "Sun Duration",
+              xAxis: xAxisSunRise,
+            },
+            {
+              xAxis: xAxisSunSet,
+            },
+          ],
+        ];
+        this.option.series[1].data = rainfall;
+        if (this.$refs.chart) {
+          (this.$refs.chart).refreshOption();
         }
-        this.line.series[1].data = rainfall;
-
         return true;
       } else {
         console.log("WARNING: no value for the hourly data");
