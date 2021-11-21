@@ -29,7 +29,7 @@ git submodule update --init --recursive
 
 ### API Key from OpenWeather
 
-* Signup at openweathermap.org and get an API key. 
+* Signup at https://openweathermap.org/api and get an API key. 
 * Create a file called `.env` in this project root folder, copy your API key and set the update rate in milliseconds.
 
 ```
@@ -73,5 +73,6 @@ WantedBy=default.target
 
 2. Enable service for autostart`systemctl --user enable dashhome && systemctl --user start dashhome`
 
+3. Stop the service `systemctl --user stop dashhome`
 ### Customize the configuration
 See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).

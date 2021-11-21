@@ -27,7 +27,6 @@ export default {
           fontSize: 20,
         },
       },
-
       tooltip: {},
       xAxis: {
         name: "Hours",
@@ -142,8 +141,8 @@ export default {
 
         if (hour >= xAxisSunRise) {
           if (hour < xAxisSunSet) {
-            xAxisSunRise = hour;
-            xAxisSunSet = xAxisSunSet;
+            xAxisSunRise = 0;
+            xAxisSunSet = xAxisSunSet - hour;
           } else {
             var offset = 24 - hour
             xAxisSunRise = offset + parseInt(this.p_sun[1][0].substring(0, 2));
