@@ -255,6 +255,7 @@ export default {
         this.weatherData.sunny = [[sunriseTime, sunsetTime], [nextsunrise, nextsunset]]
         // show max 5 days weather forcast
         let shownDays = responseData.daily.length > 6 ? 6 : responseData.daily.length
+        this.dailyIcons = {}
         for (let i = 1; i < shownDays; i++) {
           dateObject = new Date(responseData.daily[i].dt * 1000);
           let month = dateObject.toLocaleString("en-US", { month: "short" }); // Dec
